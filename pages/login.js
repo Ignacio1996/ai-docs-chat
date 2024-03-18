@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase"; // Ensure you've set up this export
+import Link from "next/link";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -44,9 +45,9 @@ export default function Login() {
         >
           Log in
         </button>
-        <a href="/register" className="mt-5 text-blue-600 hover:underline">
+        <Link href="/register" className="mt-5 text-blue-600 hover:underline">
           Register
-        </a>
+        </Link>
       </form>
     </div>
   );
