@@ -3,7 +3,7 @@ export const uploadFileContentToServer = async (downloadURL, fileName) => {
     // Fetch the file content from the downloadURL
     console.log("uploadFile.js 3 | downloadurl", downloadURL);
     const response = await fetch(downloadURL, {
-      mode: "no-cors",
+      // mode: "no-cors",
     });
     console.log("uploadFile.js 5 | response", response);
     let fileContent;
