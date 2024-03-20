@@ -15,6 +15,8 @@ import {
   deleteDoc,
   doc,
 } from "firebase/firestore";
+import { Chat } from "@/components/Chat";
+import { uploadFileContentToServer } from "@/rag_utils/uploadFile";
 
 export default function Dashboard() {
   const router = useRouter();
@@ -90,8 +92,18 @@ export default function Dashboard() {
     fetchFiles(); // Refresh the list after deletion
   };
 
+  const uploadDoc = async (file) => {
+    try {
+      console.log("dashboard.js 97 | file name", file.name);
+      await uploadFileContentToServer(file.url, file.name);
+      console.log("dashboard.js 97 | uploaded to server!");
+    } catch (error) {
+      console.log("dashboard.js 99 | error uploading to server", error.message);
+    }
+  };
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2">
+    <div className="flex flex-col items-center justify-center min-h-screen py-2 w-full">
       <h1 className="text-2xl font-semibold">Dashboard</h1>
       <input type="file" onChange={uploadFile} />
       <ul>
@@ -101,10 +113,15 @@ export default function Dashboard() {
             <a href={file.url} target="_blank" rel="noopener noreferrer">
               Open
             </a>{" "}
-            - <button onClick={() => deleteFile(file)}>Delete</button>
+            - <button onClick={() => deleteFile(file)}>Delete</button>-{" "}
+            <button className="" onClick={() => uploadDoc(file)}>
+              Upload Doc
+            </button>
           </li>
         ))}
       </ul>
+
+      <Chat />
       <button
         onClick={handleLogout}
         className="mt-4 p-2 bg-blue-500 text-white rounded hover:bg-blue-700"
